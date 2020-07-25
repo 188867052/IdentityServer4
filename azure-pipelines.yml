@@ -18,7 +18,6 @@ steps:
   displayName: DotNetCore publish
   inputs:
     command: 'publish'
-    publishWebProjects: true
     arguments: '-c Debug'
     zipAfterPublish: false
 
