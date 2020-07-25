@@ -42,7 +42,7 @@ steps:
   displayName: Docker build
   inputs:
     command: 'build'
-    Dockerfile: '**/IdentityServer4/Dockerfile'
+    Dockerfile: '**/IdentityServer/Dockerfile'
     arguments: '-t 542153354/identityserver4:v1.0'
 
 - task: CmdLine@2
