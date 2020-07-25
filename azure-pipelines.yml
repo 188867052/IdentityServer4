@@ -21,7 +21,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '/src/IdentityServer -c Release'
+    arguments: '-c Release'
     zipAfterPublish: false
 
 - task: DockerInstaller@0
