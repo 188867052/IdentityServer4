@@ -10,5 +10,5 @@ then
 	sudo docker rm $containerId
 fi
 
-sudo docker run -d -p 8088:80 --restart=always 542153354/mvcclient:v1.0 /bin/sh 
+sudo docker run -d -p 8089:80 --restart=always 542153354/mvcclient:v1.0 /bin/sh 
 exit
