@@ -42,7 +42,7 @@ steps:
   displayName: Docker build
   inputs:
     command: 'build'
-    Dockerfile: '**/Dockerfile'
+    Dockerfile: '**/IdentityServer4/Dockerfile'
     arguments: '-t 542153354/identityserver4:v1.0'
 
 - task: CmdLine@2
@@ -60,7 +60,7 @@ steps:
   displayName: Docker build
   inputs:
     command: 'build'
-    Dockerfile: '**/Dockerfile'
+    Dockerfile: '**/MvcClient/Dockerfile'
     arguments: '-t 542153354/mvcclient:v1.0'
 
 - task: CmdLine@2
