@@ -18,7 +18,7 @@ namespace Api
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "http://119.45.37.57:8088";
-                    
+                    options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
