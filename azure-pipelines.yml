@@ -34,7 +34,7 @@ steps:
   inputs:
     command: 'build'
     Dockerfile: '**/Dockerfile'
-    arguments: '-t 542153354/IdentityServer4:v1.0'
+    arguments: '-t 542153354/identityserver4:v1.0'
 
 - task: CmdLine@2
   displayName: Docker login
@@ -54,7 +54,7 @@ steps:
 - task: CmdLine@2
   displayName: Docker push
   inputs:
-    script: 'docker push 542153354/IdentityServer4:v1.0'
+    script: 'docker push 542153354/identityserver4:v1.0'
 
 - task: CmdLine@2
   displayName: install sshpass
