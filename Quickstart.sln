@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BD8BA25C-A91D-419D-99B6-B575ADD6D061}"
+	ProjectSection(SolutionItems) = preProject
+		deploy-server.sh = deploy-server.sh
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "src\IdentityServer\IdentityServer.csproj", "{79D1F107-F3AF-4A93-BF5D-49EF6A46E50E}"
 EndProject
