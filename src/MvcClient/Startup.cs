@@ -24,6 +24,7 @@ namespace MvcClient
             {
                 options.Authority = "http://119.45.37.57:8088";
 
+                options.RequireHttpsMetadata = false;
                 options.ClientId = "mvc";
                 options.ClientSecret = "secret";
                 options.ResponseType = "code";
