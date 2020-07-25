@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo docker pull 542153354/IdentityServer4:v1.0 
+sudo docker pull 542153354/identityserver4:v1.0 
 
 containerId="`sudo docker ps | grep "8088->80" | awk  '{print $1}'`"
 echo "containerId:$containerId"
@@ -17,6 +17,6 @@ fi
 # 	sudo docker rmi -f $imageId
 # fi
 
-sudo docker run -d -p 8081:80 --restart=always 542153354/IdentityServer4:v1.0 /bin/sh 
+sudo docker run -d -p 8081:80 --restart=always 542153354/identityserver4:v1.0 /bin/sh 
 
 exit
