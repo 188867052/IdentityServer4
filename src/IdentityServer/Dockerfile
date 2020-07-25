@@ -3,5 +3,5 @@ MAINTAINER cheng 542153354@qq.com
 
 WORKDIR /app
 EXPOSE 80
-COPY ./bin/Release/netcoreapp3.1/publish /app
+COPY ./bin/Debug/netcoreapp3.1/publish /app
 ENTRYPOINT ["dotnet", "IdentityServer.dll"]

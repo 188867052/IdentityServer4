@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  buildConfiguration: 'Release'
+  buildConfiguration: 'Debug'
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
@@ -21,7 +21,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '-c Release'
+    arguments: '-c Debug'
     zipAfterPublish: false
 
 - task: DockerInstaller@0
