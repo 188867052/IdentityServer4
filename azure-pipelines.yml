@@ -13,8 +13,6 @@ variables:
   buildConfiguration: 'Debug'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: DotNetCore publish
@@ -40,21 +38,6 @@ steps:
   displayName: Docker login
   inputs:
     script: 'docker login -u 542153354 -p $(DockerPassword)'
-    
-- task: CmdLine@2
-  displayName: Docker images
-  inputs:
-    script: 'docker images'
-
-- task: CmdLine@2
-  displayName: Docker ps
-  inputs:
-    script: 'docker ps'
-
-- task: CmdLine@2
-  displayName: Docker push
-  inputs:
-    script: 'docker push 542153354/identityserver4:v1.0'
 
 - task: CmdLine@2
   displayName: install sshpass
@@ -63,7 +46,23 @@ steps:
       sudo apt-get install sshpass
 
 - task: CmdLine@2
-  displayName: deploy api to TencentCloud
+  displayName: Docker push
+  inputs:
+    script: 'docker push 542153354/identityserver4:v1.0'
+
+- task: CmdLine@2
+  displayName: deploy to TencentCloud
   inputs:
     script: |
       sshpass -p "$(TencentCloudPassword)" ssh -o StrictHostKeyChecking=no -t -t ubuntu@$(TencentCloudIP) bash -s < deploy-server.sh
+
+- task: CmdLine@2
+  displayName: Docker push
+  inputs:
+    script: 'docker push 542153354/mvcclient:v1.0'
+
+- task: CmdLine@2
+  displayName: deploy to TencentCloud
+  inputs:
+    script: |
+      sshpass -p "$(TencentCloudPassword)" ssh -o StrictHostKeyChecking=no -t -t ubuntu@$(TencentCloudIP) bash -s < deploy-mvc.sh
