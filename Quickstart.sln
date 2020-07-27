@@ -5,6 +5,9 @@ VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BD8BA25C-A91D-419D-99B6-B575ADD6D061}"
 	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		deploy-api.sh = deploy-api.sh
+		deploy-mvc.sh = deploy-mvc.sh
 		deploy-server.sh = deploy-server.sh
 	EndProjectSection
 EndProject
