@@ -1,36 +1,49 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Serilog;
-using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using Microsoft.Extensions.Hosting;
+using Serilog.Debugging;
+using Serilog.Sinks.File;
+using Serilog.Formatting.Json;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Serilog.Sinks.Elasticsearch;
 
 namespace IdentityServer
 {
     public class Program
     {
+        private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+                                                            .SetBasePath(Directory.GetCurrentDirectory())
+                                                            .AddJsonFile("appsettings.json", true, true)
+                                                            .AddEnvironmentVariables()
+                                                            .Build();
+
         public static int Main(string[] args)
         {
+            SelfLog.Enable(Console.Error);
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-                .MinimumLevel.Override("System", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                // uncomment to write to Azure diagnostics stream
-                //.WriteTo.File(
-                //    @"D:\home\LogFiles\Application\identityserver.txt",
-                //    fileSizeLimitBytes: 1_000_000,
-                //    rollOnFileSizeLimit: true,
-                //    shared: true,
-                //    flushToDiskInterval: TimeSpan.FromSeconds(1))
-                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
+                .WriteTo.Console(theme: SystemConsoleTheme.Literate)
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(Configuration.GetConnectionString(nameof(Serilog.Sinks.Elasticsearch)))) // for the docker-compose implementation
+                {
+                    IndexFormat = Configuration.GetSection(nameof(Serilog.Sinks.Elasticsearch))[nameof(ElasticsearchSinkOptions.IndexFormat)],
+
+                    AutoRegisterTemplate = true,
+                    OverwriteTemplate = true,
+                    DetectElasticsearchVersion = true,
+                    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
+                    NumberOfReplicas = 1,
+                    NumberOfShards = 2,
+                    //BufferBaseFilename = "./buffer",
+                    RegisterTemplateFailure = RegisterTemplateRecovery.FailSink,
+                    FailureCallback = e => Console.WriteLine("Unable to submit event " + e.MessageTemplate),
+                    EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog |
+                                       EmitEventFailureHandling.WriteToFailureSink |
+                                       EmitEventFailureHandling.RaiseCallback,
+                    FailureSink = new FileSink("./fail-{Date}.txt", new JsonFormatter(), null, null)
+                })
                 .CreateLogger();
 
             try
