@@ -22,13 +22,19 @@ namespace IdentityServer
 
         public static int Main(string[] args)
         {
+            var ConnectionString = Configuration.GetConnectionString(nameof(Serilog.Sinks.Elasticsearch));
+            Log.Information("{ConnectionString}", ConnectionString);
+
+            var IndexFormat = Configuration.GetSection(nameof(Serilog.Sinks.Elasticsearch))[nameof(ElasticsearchSinkOptions.IndexFormat)];
+            Log.Information("{IndexFormat}", IndexFormat);
+
             SelfLog.Enable(Console.Error);
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Console(theme: SystemConsoleTheme.Literate)
-                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(Configuration.GetConnectionString(nameof(Serilog.Sinks.Elasticsearch)))) // for the docker-compose implementation
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://119.45.37.57:9200")) // for the docker-compose implementation
                 {
-                    IndexFormat = Configuration.GetSection(nameof(Serilog.Sinks.Elasticsearch))[nameof(ElasticsearchSinkOptions.IndexFormat)],
+                    IndexFormat = "IdentityServer-{0:yyyy.MM.dd}",
 
                     AutoRegisterTemplate = true,
                     OverwriteTemplate = true,

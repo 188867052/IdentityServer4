@@ -1,32 +1,40 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Debugging;
-using Serilog.Formatting.Json;
-using Serilog.Sinks.Elasticsearch;
-using Serilog.Sinks.File;
 using Serilog.Sinks.SystemConsole.Themes;
+using System;
+using Microsoft.Extensions.Hosting;
+using Serilog.Debugging;
+using Serilog.Sinks.File;
+using Serilog.Formatting.Json;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Serilog.Sinks.Elasticsearch;
 
 namespace MvcClient
 {
     public class Program
     {
+        private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+                                                            .SetBasePath(Directory.GetCurrentDirectory())
+                                                            .AddJsonFile("appsettings.json", true, true)
+                                                            .AddEnvironmentVariables()
+                                                            .Build();
+
         public static int Main(string[] args)
         {
+            var ConnectionString = Configuration.GetConnectionString(nameof(Serilog.Sinks.Elasticsearch));
+            Log.Information("{ConnectionString}", ConnectionString);
+
+            var IndexFormat = Configuration.GetSection(nameof(Serilog.Sinks.Elasticsearch))[nameof(ElasticsearchSinkOptions.IndexFormat)];
+            Log.Information("{IndexFormat}", IndexFormat);
+
             SelfLog.Enable(Console.Error);
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Console(theme: SystemConsoleTheme.Literate)
-                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(Configuration.GetConnectionString(nameof(Serilog.Sinks.Elasticsearch)))) // for the docker-compose implementation
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://119.45.37.57:9200")) // for the docker-compose implementation
                 {
-                    IndexFormat = Configuration.GetSection(nameof(Serilog.Sinks.Elasticsearch))[nameof(ElasticsearchSinkOptions.IndexFormat)],
+                    IndexFormat = "MvcClient-{0:yyyy.MM.dd}",
 
                     AutoRegisterTemplate = true,
                     OverwriteTemplate = true,
@@ -63,16 +71,10 @@ namespace MvcClient
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
-
-        private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-                                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                                    .AddJsonFile("appsettings.json", true, true)
-                                                    .AddEnvironmentVariables()
-                                                    .Build();
     }
 }
