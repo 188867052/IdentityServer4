@@ -10,7 +10,7 @@ namespace Shared.Startups
 {
     public static class LogExtentions
     {
-        public static void ConfigureSerilog(string IndexFormat)
+        public static void ConfigureSerilog(string indexFormat)
         {
             SelfLog.Enable(Console.Error);
             Log.Logger = new LoggerConfiguration()
@@ -19,7 +19,7 @@ namespace Shared.Startups
                 .WriteTo.Console(theme: SystemConsoleTheme.Literate)
                 .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://119.45.37.57:9200")) // for the docker-compose implementation
                 {
-                    IndexFormat = IndexFormat,
+                    IndexFormat = indexFormat,
                     AutoRegisterTemplate = true,
                     OverwriteTemplate = true,
                     DetectElasticsearchVersion = true,

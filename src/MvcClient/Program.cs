@@ -12,7 +12,7 @@ namespace MvcClient
         {
             try
             {
-                LogExtentions.ConfigureSerilog($"{nameof(MvcClient)}-{0:yyyy.MM.dd}");
+                LogExtentions.ConfigureSerilog($"{nameof(MvcClient)}-{{0:yyyy.MM.dd}}");
 
                 Log.Information("Starting host...");
                 CreateHostBuilder(args).Build().Run();

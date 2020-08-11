@@ -12,7 +12,7 @@ namespace IdentityServer
         {
             try
             {
-                LogExtentions.ConfigureSerilog($"{nameof(IdentityServer)}-{0:yyyy.MM.dd}");
+                LogExtentions.ConfigureSerilog($"{nameof(IdentityServer)}-{{0:yyyy.MM.dd}}");
 
                 Log.Information("Starting host...");
                 CreateHostBuilder(args).Build().Run();
