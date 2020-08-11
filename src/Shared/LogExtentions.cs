@@ -6,7 +6,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace IdentityServer.Startups
+namespace Shared.Startups
 {
     public static class LogExtentions
     {

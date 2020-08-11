@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using Microsoft.Extensions.Hosting;
-using IdentityServer.Startups;
 using System;
+using Shared.Startups;
 
 namespace IdentityServer
 {

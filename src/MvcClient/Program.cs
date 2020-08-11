@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using Microsoft.Extensions.Hosting;
 using System;
-using MvcClient.Startups;
+using Shared.Startups;
 
 namespace MvcClient
 {

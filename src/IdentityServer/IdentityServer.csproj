@@ -34,5 +34,9 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="../Shared/*" />
+  </ItemGroup>
     
 </Project>
