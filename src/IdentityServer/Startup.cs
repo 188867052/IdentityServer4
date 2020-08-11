@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer.Startups;
 using IdentityServer4;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
@@ -20,11 +19,6 @@ namespace IdentityServer
 {
     public class Startup
     {
-        public Startup()
-        {
-            LogExtentions.ConfigureSerilog($"{nameof(IdentityServer)}-{0:yyyy.MM.dd}");
-        }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
