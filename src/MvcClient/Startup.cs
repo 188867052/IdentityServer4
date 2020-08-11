@@ -2,12 +2,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MvcClient.Startups;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace MvcClient
 {
     public class Startup
     {
+        public Startup()
+        {
+            LogExtentions.ConfigureSerilog($"{nameof(MvcClient)}-{0:yyyy.MM.dd}");
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
