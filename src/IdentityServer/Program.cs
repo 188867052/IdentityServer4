@@ -2,7 +2,6 @@
 using Serilog;
 using Microsoft.Extensions.Hosting;
 using System;
-using Shared.Startups;
 
 namespace IdentityServer
 {
@@ -12,7 +11,7 @@ namespace IdentityServer
         {
             try
             {
-                LogExtentions.ConfigureSerilog($"{nameof(IdentityServer)}-{{0:yyyy.MM.dd}}");
+                MyExtentions.Elasticsearch.ConfigureSerilog(nameof(IdentityServer));
 
                 Log.Information("Starting host...");
                 CreateHostBuilder(args).Build().Run();

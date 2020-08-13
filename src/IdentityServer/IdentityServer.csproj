@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MyExtentions" Version="1.0.0" />
     <PackageReference Include="IdentityModel" Version="4.3.1" />
     <PackageReference Include="IdentityServer4" Version="4.0.4" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="4.0.4" />
@@ -37,6 +38,10 @@
 
   <ItemGroup>
     <Compile Include="../Shared/*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="..\Shared\LogExtentions.cs" />
   </ItemGroup>
     
 </Project>

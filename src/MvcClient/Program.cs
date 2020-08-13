@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using Microsoft.Extensions.Hosting;
 using System;
-using Shared.Startups;
 
 namespace MvcClient
 {
@@ -12,7 +11,7 @@ namespace MvcClient
         {
             try
             {
-                LogExtentions.ConfigureSerilog($"{nameof(MvcClient)}-{{0:yyyy.MM.dd}}");
+                MyExtentions.Elasticsearch.ConfigureSerilog(nameof(MvcClient));
 
                 Log.Information("Starting host...");
                 CreateHostBuilder(args).Build().Run();
