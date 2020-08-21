@@ -24,7 +24,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                         </li>
-                        @foreach (var port in IdentityServer.Config.Ports)
+                        @foreach (var port in new string[] { "8089", "8090", "8091", "8092", "8093", "8094", "8095", })
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="@($"http://119.45.37.57:{port}")">@port</a>

@@ -41,8 +41,4 @@
   <ItemGroup>
     <Compile Remove="..\Shared\LogExtentions.cs" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\IdentityServer\IdentityServer.csproj" />
-  </ItemGroup>
 </Project>
