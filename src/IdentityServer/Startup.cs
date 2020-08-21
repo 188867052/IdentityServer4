@@ -24,7 +24,7 @@ namespace IdentityServer
             services.AddControllersWithViews();
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-            const string connectionString = @"Server=47.105.214.235;Database=IdentityServer;User Id=sa;Password=931592457czA;MultipleActiveResultSets=true";
+            const string connectionString = @"Server=47.105.214.235;Database=IdentityServer;User Id=sa;Password=Pass@Word1;MultipleActiveResultSets=true";
 
             var builder = services.AddIdentityServer()
                 .AddTestUsers(TestUsers.Users)
