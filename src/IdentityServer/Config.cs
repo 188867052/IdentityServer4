@@ -5,11 +5,22 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IdentityServer
 {
     public static class Config
     {
+        public static string[] Ports = new string[] {
+                "8089",
+                "8090",
+                "8091",
+                "8092",
+                "8093",
+                "8094",
+                "8095",
+            };
+
         public static IEnumerable<IdentityResource> IdentityResources =>
             new List<IdentityResource>
             {
@@ -47,10 +58,10 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.Code,
                     
                     // where to redirect to after login
-                    RedirectUris = { "http://119.45.37.57:8089/signin-oidc" },
+                    RedirectUris =Ports.Select(o=>$"http://119.45.37.57:{o}/signin-oidc").ToArray(),
 
                     // where to redirect to after logout
-                    PostLogoutRedirectUris = { "http://119.45.37.57:8089/signout-callback-oidc" },
+                    PostLogoutRedirectUris = Ports.Select(o=>$"http://119.45.37.57:{o}/signout-callback-oidc").ToArray(),
 
                     AllowedScopes = new List<string>
                     {
